@@ -26,7 +26,6 @@ photo-post-production/
 ├── agents/openai.yaml           # Codex Skill 显示名称与默认提示
 ├── references/                  # 评分、编辑计划、Adobe 契约和输出规范
 ├── scripts/                    # 本地分析、队列、计划、适配器和质量门
-├── tests/                      # 单元测试、契约测试和运行时回归测试
 └── 使用说明.md                 # 中文操作说明
 docs/superpowers/                # 设计文档、研究补充和实现计划
 ```
@@ -91,7 +90,7 @@ python3 photo-post-production/scripts/execution_engine.py \
 ## 前置条件
 
 - macOS，推荐 Python 3.11 或更高版本。
-- Python 包 `Pillow`；测试和视觉预览依赖它。
+- Python 包 `Pillow`；视觉预览和本地分析依赖它。
 - RAW 预览依赖 macOS `sips` 或已配置的本地 RAW 解码路径。
 - Lightroom Classic 已启动，并已配置可用的 Lightroom MCP；Skill 会回读 Develop 状态和导出结果。
 - Photoshop 已启动，并已配置可用的 Photoshop MCP/UXP Bridge。精细后期还需要通过健康检查的图层、蒙版、操作清单和导出能力。
@@ -127,16 +126,6 @@ Lightroom 和 Photoshop 是独立能力门。某一端不可用时，运行会�
 - 缺少适配器、操作 Descriptor、蒙版、导出或质量证据时失败关闭并结构化降级。
 - 单个候选最多三轮有界迭代，保留已验证的最佳版本。
 
-## 测试
-
-在仓库根目录执行：
-
-```bash
-python3 -m unittest discover -s photo-post-production/tests -p 'test_*.py' -v
-```
-
-测试覆盖评分契约、分类与资产组、风格记忆、审核板、Lightroom/Photoshop 适配器契约、单 PSD 工作流、参数回读、质量门、导出校验、生成式 Hybrid 清单和完整运行时回归。真实 Adobe 联调还需要本机 Lightroom、Photoshop 和相应 MCP/Bridge 正常运行。
-
 ## 开发文档
 
 - [Skill 主流程](photo-post-production/SKILL.md)
@@ -147,4 +136,4 @@ python3 -m unittest discover -s photo-post-production/tests -p 'test_*.py' -v
 
 ## 贡献
 
-新增或修改流程时，先更新对应的契约、参考文档和测试，再运行完整测试套件。涉及架构或用户可见行为的决定应记录在 `docs/`，提交保持聚焦，并避免提交个人照片、Adobe 运行目录、缓存和本地数据库。
+新增或修改流程时，先更新对应的契约和参考文档，再完成本地静态验证与 Adobe 联调。涉及架构或用户可见行为的决定应记录在 `docs/`，提交保持聚焦，并避免提交个人照片、Adobe 运行目录、测试数据、缓存和本地数据库。
