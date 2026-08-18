@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Photo post-production director brief",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["project_goal", "subject_priority", "target_use", "mood", "photographer_intent", "creative_intensity", "source_fidelity", "transformation_disclosure", "allowed_operations"],
+  "properties": {
+    "project_goal": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "subject_priority": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1, "pattern": "\\S"}},
+    "target_use": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "mood": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "photographer_intent": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "creative_intensity": {"type": "number", "minimum": 0, "maximum": 100},
+    "source_fidelity": {"type": "number", "minimum": 0, "maximum": 100},
+    "transformation_disclosure": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "allowed_operations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1, "pattern": "\\S"}}
+  }
+}

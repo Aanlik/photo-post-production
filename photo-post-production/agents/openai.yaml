@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI照片后期导演"
+  short_description: "RAW快速分层、动物识别、精细后期与成片复核"
+  default_prompt: "自动处理用户指定的照片或 RAW 文件夹：分类（含动物）、评分、筛选、Lightroom 全局调整、Photoshop 精细后期和高质量 JPG/PSD 导出；需要生成式修改时自动调用当前聊天窗口内置 image_gen，自动回写 Photoshop 图层；默认自然增强、混合本地流程、无需用户选择 Skill/工具/提示词/逐张确认，不使用 API Key。"

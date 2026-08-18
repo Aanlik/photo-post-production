@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Photo post-production edit plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["director_brief", "intent", "edit_authority", "content_policy", "adjustment_budget", "regions", "operations", "operation_records", "variant_name"],
+  "properties": {
+    "director_brief": {"$ref": "director-brief.schema.json"},
+    "intent": {"enum": ["documentary-truthful", "natural-enhancement", "editorial-expression", "competition-standard", "commercial/creative"]},
+    "edit_authority": {"enum": ["full"]},
+    "content_policy": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "adjustment_budget": {"type": "object", "required": ["max_global_adjustments", "max_local_adjustments", "max_transformative_operations", "max_exposure_delta", "max_crop_fraction", "max_temperature_delta", "max_sharpening", "max_geometry_delta", "max_candidates"], "properties": {"max_global_adjustments": {"type": "number", "minimum": 0}, "max_local_adjustments": {"type": "number", "minimum": 0}, "max_transformative_operations": {"type": "number", "minimum": 0}, "max_exposure_delta": {"type": "number", "minimum": 0}, "max_crop_fraction": {"type": "number", "minimum": 0, "maximum": 1}, "max_temperature_delta": {"type": "number", "minimum": 0}, "max_sharpening": {"type": "number", "minimum": 0}, "max_geometry_delta": {"type": "number", "minimum": 0}, "max_candidates": {"type": "number", "minimum": 0}, "min_temperature": {"type": "number", "minimum": 0}, "max_temperature": {"type": "number", "minimum": 0}, "max_tone_delta": {"type": "number", "minimum": 0}}, "additionalProperties": false},
+    "global_adjustments": {"type": "array", "items": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "number"}}},
+    "transformation_level": {"type": ["string", "null"]},
+    "regions": {"type": "array", "items": {"$ref": "#/definitions/region"}},
+    "operations": {"type": "array", "items": {"$ref": "#/definitions/operation"}},
+    "operation_records": {"type": "array", "items": {"$ref": "#/definitions/operation_record"}},
+    "variant_name": {"enum": ["natural", "editorial", "competition-standard"]}
+  },
+  "allOf": [{"if": {"properties": {"edit_authority": {"const": "full"}}}, "then": {"properties": {"content_policy": {"const": "user-authorized-transformative"}}}}],
+  "definitions": {
+    "region": {"type": "object", "additionalProperties": false, "required": ["id", "label", "mask_type", "purpose", "adjustments", "confidence", "forbidden_changes"], "properties": {"id": {"type": "string", "minLength": 1, "pattern": "\\S"}, "label": {"type": "string", "minLength": 1, "pattern": "\\S"}, "mask_type": {"enum": ["semantic", "geometry"]}, "purpose": {"type": "string", "minLength": 1, "pattern": "\\S"}, "adjustments": {"type": "object", "additionalProperties": {"type": "number"}}, "confidence": {"type": "number", "minimum": 0, "maximum": 1}, "forbidden_changes": {"type": "array", "items": {"type": "string"}}}},
+    "operation": {"type": "object", "additionalProperties": false, "required": ["operation_id", "type", "depends_on", "backend", "reason", "affected_region", "parameters", "risk", "checkpoint", "generative", "input_layer", "output_layer"], "properties": {"operation_id": {"type": "string", "minLength": 1, "pattern": "\\S"}, "type": {"enum": ["remove-element", "add-element", "generative-fill", "generative-expand", "replace-sky-or-background", "reshape-geometry", "large-crop", "relight-subject", "style-reconstruct"]}, "depends_on": {"type": "array", "items": {"type": "string", "minLength": 1, "pattern": "\\S"}}, "backend": {"type": "string", "minLength": 1, "pattern": "\\S"}, "reason": {"type": "string", "minLength": 1, "pattern": "\\S"}, "affected_region": {"type": "string", "minLength": 1, "pattern": "\\S"}, "parameters": {"type": "object"}, "risk": {"enum": ["low", "medium", "high"]}, "checkpoint": {"type": "string", "minLength": 1, "pattern": "\\S"}, "generative": {"type": "boolean"}, "input_layer": {"type": "string", "minLength": 1, "pattern": "\\S"}, "output_layer": {"type": "string", "minLength": 1, "pattern": "\\S"}}},
+    "operation_record": {"type": "object", "additionalProperties": false, "required": ["operation_id", "before_path", "before_sha256", "after_path", "after_sha256", "model", "model_version", "software", "prompt", "mask_reference", "mask_sha256"], "properties": {"operation_id": {"type": "string", "minLength": 1, "pattern": "\\S"}, "before_path": {"type": "string", "minLength": 1, "pattern": "\\S"}, "before_sha256": {"type": "string", "minLength": 1, "pattern": "\\S"}, "after_path": {"type": "string", "minLength": 1, "pattern": "\\S"}, "after_sha256": {"type": "string", "minLength": 1, "pattern": "\\S"}, "model": {"type": "string", "minLength": 1, "pattern": "\\S"}, "model_version": {"type": "string", "minLength": 1, "pattern": "\\S"}, "software": {"type": "string", "minLength": 1, "pattern": "\\S"}, "prompt": {"type": "string", "minLength": 1, "pattern": "\\S"}, "mask_reference": {"type": "string", "minLength": 1, "pattern": "\\S"}, "mask_sha256": {"type": "string", "minLength": 1, "pattern": "\\S"}}}
+  }
+}
