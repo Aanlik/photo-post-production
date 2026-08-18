@@ -27,7 +27,6 @@ photo-post-production/
 ├── references/                  # 评分、编辑计划、Adobe 契约和输出规范
 ├── scripts/                    # 本地分析、队列、计划、适配器和质量门
 └── 使用说明.md                 # 中文操作说明
-docs/superpowers/                # 设计文档、研究补充和实现计划
 ```
 
 ## 安装
@@ -126,14 +125,6 @@ Lightroom 和 Photoshop 是独立能力门。某一端不可用时，运行会�
 - 缺少适配器、操作 Descriptor、蒙版、导出或质量证据时失败关闭并结构化降级。
 - 单个候选最多三轮有界迭代，保留已验证的最佳版本。
 
-## 开发文档
-
-- [Skill 主流程](photo-post-production/SKILL.md)
-- [中文使用说明](photo-post-production/使用说明.md)
-- [中文设计文档](docs/superpowers/specs/2026-08-14-photo-post-production-skill-design-zh.md)
-- [研究补充文档](docs/superpowers/specs/2026-08-17-photo-post-production-research-supplement-zh.md)
-- [实现计划](docs/superpowers/plans/2026-08-14-photo-post-production-skill.md)
-
 ## 贡献
 
-新增或修改流程时，先更新对应的契约和参考文档，再完成本地静态验证与 Adobe 联调。涉及架构或用户可见行为的决定应记录在 `docs/`，提交保持聚焦，并避免提交个人照片、Adobe 运行目录、测试数据、缓存和本地数据库。
+新增或修改流程时，先更新 `references/` 中的契约和说明，再完成本地静态验证与 Adobe 联调。提交保持聚焦，并避免提交个人照片、Adobe 运行目录、测试数据、缓存和本地数据库。
